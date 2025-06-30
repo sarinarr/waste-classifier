@@ -1,10 +1,23 @@
-
 import streamlit as st
 from PIL import Image
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.models import model_from_json
+import os
+import requests
+
+weights_url = "https://huggingface.co/sarinarr/waste-classifier-weights/resolve/main/weights.hdf5"
+weights_path = "weights.hdf5"
+
+if not os.path.exists(weights_path):
+    with st.spinner("Downloading model weights..."):
+        with requests.get(weights_url, stream=True) as r:
+            r.raise_for_status()
+            with open(weights_path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    f.write(chunk)
+    st.success("Model weights downloaded successfully.")
 
 # Constants
 CLASS_NAMES = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
