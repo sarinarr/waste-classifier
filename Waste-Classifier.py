@@ -99,13 +99,13 @@ def page_predict():
         uploaded = st.file_uploader("Upload an image", type=['jpg', 'png'])
         if uploaded:
             img = Image.open(uploaded)
-            st.image(img, caption="Uploaded Image", use_column_width=True)
+            st.image(img, caption="Uploaded Image", use_container_width=True)
 
     elif input_method == "📷 Take a photo":
         cam = st.camera_input("Take a photo")
         if cam:
             img = Image.open(cam)
-            st.image(img, caption="Captured Photo", use_column_width=True)
+            st.image(img, caption="Captured Photo", use_container_width=True)
 
     if img and st.button("🔍 Predict Waste Category"):
         label, confidence = predict(img)
